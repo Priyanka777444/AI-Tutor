@@ -32,12 +32,12 @@ AdaptIQ is a full-stack, multi-modal AI tutoring web application that watches yo
 │  │  Supabase Auth   │    │      Edge Functions         │   │
 │  │  (Anonymous)     │    │  ┌────────────────────────┐ │   │
 │  └──────────────────┘    │  │  adaptiq-chat          │ │   │
-│                           │  │  → GPT-4o + System     │ │   │
+│                           │  │  → Llama 3 + System    │ │   │
 │  ┌──────────────────┐    │  │    Prompt Adaptation   │ │   │
 │  │  PostgreSQL DB   │    │  └────────────────────────┘ │   │
 │  │  - sessions      │    │  ┌────────────────────────┐ │   │
 │  │  - chat_messages │    │  │  adaptiq-transcribe    │ │   │
-│  │  - knowledge_docs│    │  │  → OpenAI Whisper API  │ │   │
+│  │  - knowledge_docs│    │  │  → Groq API            │ │   │
 │  └──────────────────┘    │  └────────────────────────┘ │   │
 │                           └─────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────┘
@@ -101,10 +101,11 @@ VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 For the FastAPI backend, set:
 
 ```bash
-export OPENAI_API_KEY=sk-your-key-here
+export GROQ_API_KEY=your-groq-key
+export OPENAI_API_KEY=sk-your-openai-key
 ```
 
-For the Supabase Edge Functions, the `OPENAI_API_KEY` can be set via the Supabase dashboard under Project Settings → Edge Functions → Secrets. Alternatively, paste your key in the **Settings** page of the app — it's stored locally in your browser and sent with each request.
+For the Supabase Edge Functions, the `GROQ_API_KEY` and `OPENAI_API_KEY` can be set via the Supabase dashboard under Project Settings → Edge Functions → Secrets. Alternatively, paste your keys in the **Settings** page of the app — they're stored locally in your browser and sent with each request.
 
 ---
 
@@ -121,7 +122,7 @@ To test retrieval, use the **Search** box at the bottom of the Knowledge page to
 
 ## Demo Mode
 
-Demo Mode simulates a full learning session without requiring a camera or OpenAI API key.
+Demo Mode simulates a full learning session without requiring a camera or API keys.
 
 **To toggle Demo Mode:**
 - Click the lightning bolt icon (⚡) at the bottom of the sidebar navigation
@@ -161,7 +162,7 @@ Demo Mode is enabled by default when you first open the app.
 | Auth | Supabase Anonymous Auth |
 | Database | Supabase PostgreSQL |
 | AI Backend | Supabase Edge Functions (Deno) |
-| LLM | OpenAI GPT-4o |
+| LLM | Groq Llama 3 |
 | Speech STT | OpenAI Whisper API |
 | Speech TTS | Web Speech API (SpeechSynthesis) |
 | RAG (local) | LangChain + FAISS + Sentence Transformers |

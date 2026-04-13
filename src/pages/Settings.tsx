@@ -8,7 +8,9 @@ const SUBJECTS = [
 
 export function Settings() {
   const [apiKey, setApiKey] = useState("");
+  const [openaiApiKey, setOpenaiApiKey] = useState("");
   const [showKey, setShowKey] = useState(false);
+  const [showOpenAIKey, setShowOpenAIKey] = useState(false);
   const [teachingStyle, setTeachingStyle] = useState<"socratic" | "explanatory" | "quiz">("socratic");
   const [subject, setSubject] = useState("Machine Learning");
   const [ttsEnabled, setTtsEnabled] = useState(true);
@@ -17,7 +19,8 @@ export function Settings() {
   const [micStatus, setMicStatus] = useState<"unknown" | "granted" | "denied">("unknown");
 
   useEffect(() => {
-    setApiKey(localStorage.getItem("adaptiq_openai_key") || "");
+    setApiKey(localStorage.getItem("adaptiq_groq_key") || "");
+    setOpenaiApiKey(localStorage.getItem("adaptiq_openai_key") || "");
     setTeachingStyle((localStorage.getItem("adaptiq_teaching_style") as "socratic" | "explanatory" | "quiz") || "socratic");
     setSubject(localStorage.getItem("adaptiq_subject") || "Machine Learning");
     setTtsEnabled(localStorage.getItem("adaptiq_tts") !== "false");
@@ -32,7 +35,8 @@ export function Settings() {
   }, []);
 
   const handleSave = () => {
-    localStorage.setItem("adaptiq_openai_key", apiKey);
+    localStorage.setItem("adaptiq_groq_key", apiKey);
+    localStorage.setItem("adaptiq_openai_key", openaiApiKey);
     localStorage.setItem("adaptiq_teaching_style", teachingStyle);
     localStorage.setItem("adaptiq_subject", subject);
     localStorage.setItem("adaptiq_tts", ttsEnabled ? "true" : "false");
@@ -72,14 +76,14 @@ export function Settings() {
           <div className="bg-[#1a1a2e] border border-white/5 rounded-2xl p-6">
             <div className="flex items-center gap-2 mb-5">
               <Key size={16} className="text-indigo-400" />
-              <h2 className="text-sm font-semibold text-white">OpenAI API Key</h2>
+              <h2 className="text-sm font-semibold text-white">Groq API Key</h2>
             </div>
             <div className="relative">
               <input
                 type={showKey ? "text" : "password"}
                 value={apiKey}
                 onChange={(e) => setApiKey(e.target.value)}
-                placeholder="sk-..."
+                placeholder="gsk_... or your key"
                 className="w-full bg-[#12121a] border border-white/10 rounded-xl px-4 py-3 pr-12 text-sm text-white placeholder-white/20 outline-none focus:border-indigo-500/50 transition-colors font-mono"
               />
               <button
@@ -90,7 +94,32 @@ export function Settings() {
               </button>
             </div>
             <p className="text-xs text-white/30 mt-2">
-              Stored locally in your browser only. Required for real AI responses — without it, Demo Mode provides simulated answers.
+              Stored locally in your browser only. Required for AI chat responses.
+            </p>
+          </div>
+
+          <div className="bg-[#1a1a2e] border border-white/5 rounded-2xl p-6">
+            <div className="flex items-center gap-2 mb-5">
+              <Key size={16} className="text-indigo-400" />
+              <h2 className="text-sm font-semibold text-white">OpenAI API Key</h2>
+            </div>
+            <div className="relative">
+              <input
+                type={showOpenAIKey ? "text" : "password"}
+                value={openaiApiKey}
+                onChange={(e) => setOpenaiApiKey(e.target.value)}
+                placeholder="sk-..."
+                className="w-full bg-[#12121a] border border-white/10 rounded-xl px-4 py-3 pr-12 text-sm text-white placeholder-white/20 outline-none focus:border-indigo-500/50 transition-colors font-mono"
+              />
+              <button
+                onClick={() => setShowOpenAIKey(!showOpenAIKey)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors"
+              >
+                {showOpenAIKey ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
+            <p className="text-xs text-white/30 mt-2">
+              Stored locally in your browser only. Required for speech transcription.
             </p>
           </div>
 

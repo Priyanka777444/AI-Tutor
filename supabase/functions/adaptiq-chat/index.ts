@@ -28,11 +28,11 @@ Deno.serve(async (req: Request) => {
     const body: ChatRequest = await req.json();
     const { message, emotion = "neutral", engagement_score = 75, history = [], api_key } = body;
 
-    const openaiKey = api_key || Deno.env.get("OPENAI_API_KEY");
+    const openaiKey = api_key || Deno.env.get("GROQ_API_KEY");
 
     if (!openaiKey) {
       return new Response(
-        JSON.stringify({ error: "No OpenAI API key configured. Please add your key in Settings." }),
+        JSON.stringify({ error: "No Groq API key configured. Please add your key in Settings." }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -58,14 +58,14 @@ Current engagement score: ${engagement_score}%`;
       { role: "user", content: message },
     ];
 
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${openaiKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "gpt-4o",
+        model: "llama3-8b-8192",
         messages,
         max_tokens: 500,
         temperature: 0.7,
@@ -74,7 +74,7 @@ Current engagement score: ${engagement_score}%`;
 
     if (!response.ok) {
       const error = await response.json();
-      throw new Error(error.error?.message || "OpenAI API error");
+      throw new Error(error.error?.message || "Groq API error");
     }
 
     const data = await response.json();

@@ -1,0 +1,18 @@
+fastapi
+uvicorn
+python-dotenv
+python-multipart
+
+# AI / LLM
+groq
+langchain
+langchain-community
+
+# Embeddings / RAG
+faiss-cpu
+sentence-transformers
+pypdf
+
+# Optional (better performance)
+numpy
+tqdm

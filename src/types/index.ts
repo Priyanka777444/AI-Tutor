@@ -33,6 +33,7 @@ export interface KnowledgeDoc {
 }
 
 export interface Settings {
+  groq_api_key: string;
   openai_api_key: string;
   teaching_style: "socratic" | "explanatory" | "quiz";
   preferred_subject: string;

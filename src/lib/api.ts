@@ -4,6 +4,10 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string;
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
 
 function getApiKey(): string {
+  return localStorage.getItem("adaptiq_groq_key") || "";
+}
+
+function getOpenAIKey(): string {
   return localStorage.getItem("adaptiq_openai_key") || "";
 }
 
@@ -40,7 +44,7 @@ export async function sendChatMessage(
 }
 
 export async function transcribeAudio(audioBlob: Blob): Promise<string> {
-  const apiKey = getApiKey();
+  const apiKey = getOpenAIKey();
   const formData = new FormData();
   formData.append("audio", audioBlob, "audio.webm");
   if (apiKey) formData.append("api_key", apiKey);

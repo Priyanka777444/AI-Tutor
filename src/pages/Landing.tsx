@@ -12,7 +12,7 @@ const features = [
   {
     icon: Mic,
     title: "Voice Interaction",
-    description: "Speak naturally with your tutor using OpenAI Whisper transcription and Web Speech text-to-speech responses.",
+    description: "Speak naturally with your tutor using speech transcription and Groq-powered responses.",
     color: "from-violet-500 to-purple-500",
     glow: "shadow-violet-500/20",
   },
@@ -33,7 +33,7 @@ const features = [
 ];
 
 const stats = [
-  { value: "4o", label: "GPT Model", sub: "OpenAI" },
+  { value: "Llama 3", label: "AI Model", sub: "Groq" },
   { value: "500ms", label: "Detection Rate", sub: "Facial Analysis" },
   { value: "∞", label: "Knowledge Docs", sub: "Upload Limit" },
   { value: "3", label: "Teaching Modes", sub: "Adaptive" },

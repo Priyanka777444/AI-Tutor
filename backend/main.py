@@ -16,7 +16,7 @@ from pydantic import BaseModel
 from typing import Optional
 import os
 
-from rag import RAGEngine
+from .rag import RAGEngine
 
 app = FastAPI(title="AdaptIQ API", version="1.0.0")
 
@@ -84,8 +84,10 @@ async def upload_pdf(file: UploadFile = File(...)):
 @app.post("/api/chat")
 async def chat(request: ChatRequest):
     """Chat with the AI tutor using RAG-enhanced responses."""
-    import openai
-    client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    from groq import Groq
+    import os
+
+    client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
     relevant_chunks = rag.retrieve(request.message, k=3)
     context = "\n\n".join(relevant_chunks) if relevant_chunks else "No specific context available."
@@ -114,7 +116,7 @@ Context from knowledge base:
 
     def generate():
         stream = client.chat.completions.create(
-            model="gpt-4o",
+            model="llama3-8b-8192",
             messages=messages,
             max_tokens=500,
             temperature=0.7,

@@ -45,7 +45,7 @@ export function useChat(demoMode: boolean) {
             content,
             emotion,
             engagementScore,
-            [...messages, userMessage]
+            messages.concat(userMessage)
           );
         }
 

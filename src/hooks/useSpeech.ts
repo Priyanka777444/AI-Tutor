@@ -19,10 +19,16 @@ export function useSpeech() {
         if (e.data.size > 0) chunksRef.current.push(e.data);
       };
 
+      mediaRecorder.onerror = (e) => {
+        console.error("MediaRecorder error:", e.error);
+        setIsRecording(false);
+      };
+
       mediaRecorder.start(100);
       setIsRecording(true);
-    } catch {
-      console.error("Microphone access denied");
+    } catch (err) {
+      console.error("Microphone access denied:", err);
+      setIsRecording(false);
     }
   }, []);
 

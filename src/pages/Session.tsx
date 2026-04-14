@@ -15,7 +15,7 @@ export function Session({ demoMode }: SessionProps) {
   const { state: emotionState, chartData } = useEmotion(demoMode);
   const { messages, isLoading, error, sendMessage, clearMessages } = useChat(demoMode);
 
-  const ttsEnabled = localStorage.getItem("adaptiq_tts") !== "false";
+  const ttsEnabled = localStorage.getItem("adaptiq_tts") === "true";
 
   const handleSend = useCallback(
     (content: string) => {
